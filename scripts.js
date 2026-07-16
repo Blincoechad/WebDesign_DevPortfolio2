@@ -375,6 +375,11 @@ if (galleryImages.length > 0) {
     var el = galleryImages[i];
     var splitImageParent = el.closest(".split-image");
     var figure = el.closest("figure");
+    var caption = "";
+
+    if (figure && figure.querySelector("figcaption")) {
+      caption = figure.querySelector("figcaption").textContent;
+    }
 
     el.setAttribute("tabindex", "0");
     el.style.cursor = "pointer";
@@ -396,21 +401,40 @@ if (galleryImages.length > 0) {
         if (
           parentFigure &&
           (parentFigure.classList.contains("menu-redesign-preview") ||
-            parentFigure.getAttribute("data-lightbox-set") === "menu-redesign")
+            parentFigure.getAttribute("data-lightbox-set") ===
+              "menu-redesign" ||
+            parentFigure.classList.contains("split-image--featured") ||
+            parentFigure.classList.contains("card"))
         ) {
+          var isIndexMenuPreview =
+            parentFigure &&
+            parentFigure.classList.contains("menu-redesign-preview");
+
           srcs = [
-            parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+            isIndexMenuPreview
               ? "media/graphicWork/menuRedesign1.png"
-              : "media/menuRedesign1.png",
-            parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+              : parentFigure.getAttribute("data-lightbox-set") ===
+                  "menu-redesign"
+                ? "media/graphicWork/menuRedesign1.png"
+                : "media/menuRedesign1.png",
+            isIndexMenuPreview
               ? "media/graphicWork/menuRedesign2.png"
-              : "media/menuRedesign2.png",
-            parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+              : parentFigure.getAttribute("data-lightbox-set") ===
+                  "menu-redesign"
+                ? "media/graphicWork/menuRedesign2.png"
+                : "media/menuRedesign2.png",
+            isIndexMenuPreview
               ? "media/graphicWork/menuRedesign3.png"
-              : "media/menuRedesign3.png",
-            parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+              : parentFigure.getAttribute("data-lightbox-set") ===
+                  "menu-redesign"
+                ? "media/graphicWork/menuRedesign3.png"
+                : "media/menuRedesign3.png",
+            isIndexMenuPreview
               ? "media/graphicWork/menuRedesign4.png"
-              : "media/menuRedesign4.png",
+              : parentFigure.getAttribute("data-lightbox-set") ===
+                  "menu-redesign"
+                ? "media/graphicWork/menuRedesign4.png"
+                : "media/menuRedesign4.png",
           ];
           imgCaptions = [
             "Menu redesign concept one",
@@ -464,21 +488,39 @@ if (galleryImages.length > 0) {
             parentFigure &&
             (parentFigure.classList.contains("menu-redesign-preview") ||
               parentFigure.getAttribute("data-lightbox-set") ===
-                "menu-redesign")
+                "menu-redesign" ||
+              parentFigure.classList.contains("split-image--featured") ||
+              parentFigure.classList.contains("card"))
           ) {
+            var isIndexMenuPreviewKeydown =
+              parentFigure &&
+              parentFigure.classList.contains("menu-redesign-preview");
+
             srcs = [
-              parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+              isIndexMenuPreviewKeydown
                 ? "media/graphicWork/menuRedesign1.png"
-                : "media/menuRedesign1.png",
-              parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+                : parentFigure.getAttribute("data-lightbox-set") ===
+                    "menu-redesign"
+                  ? "media/graphicWork/menuRedesign1.png"
+                  : "media/menuRedesign1.png",
+              isIndexMenuPreviewKeydown
                 ? "media/graphicWork/menuRedesign2.png"
-                : "media/menuRedesign2.png",
-              parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+                : parentFigure.getAttribute("data-lightbox-set") ===
+                    "menu-redesign"
+                  ? "media/graphicWork/menuRedesign2.png"
+                  : "media/menuRedesign2.png",
+              isIndexMenuPreviewKeydown
                 ? "media/graphicWork/menuRedesign3.png"
-                : "media/menuRedesign3.png",
-              parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+                : parentFigure.getAttribute("data-lightbox-set") ===
+                    "menu-redesign"
+                  ? "media/graphicWork/menuRedesign3.png"
+                  : "media/menuRedesign3.png",
+              isIndexMenuPreviewKeydown
                 ? "media/graphicWork/menuRedesign4.png"
-                : "media/menuRedesign4.png",
+                : parentFigure.getAttribute("data-lightbox-set") ===
+                    "menu-redesign"
+                  ? "media/graphicWork/menuRedesign4.png"
+                  : "media/menuRedesign4.png",
             ];
             imgCaptions = [
               "Menu redesign concept one",
