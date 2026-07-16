@@ -288,12 +288,14 @@ if (galleryImages.length > 0) {
   splitContainer.className = "lightbox-split";
   splitContainer.style.display = "none";
 
-  var splitImageA = document.createElement("img");
-  splitImageA.alt = "Before image";
-  var splitImageB = document.createElement("img");
-  splitImageB.alt = "After image";
-  splitContainer.appendChild(splitImageA);
-  splitContainer.appendChild(splitImageB);
+  var splitImages = [];
+  for (var j = 0; j < 4; j++) {
+    var splitImage = document.createElement("img");
+    splitImage.alt = "Menu redesign image " + (j + 1);
+    splitImage.className = "lightbox-split-image";
+    splitContainer.appendChild(splitImage);
+    splitImages.push(splitImage);
+  }
 
   var captionElem = document.createElement("p");
   captionElem.className = "lightbox-caption";
@@ -335,16 +337,19 @@ if (galleryImages.length > 0) {
     closeBtn.focus();
   }
 
-  function openSplitLightbox(srcA, srcB, altA, altB, caption) {
-    splitImageA.src = srcA;
-    splitImageB.src = srcB;
-    splitImageA.alt = altA || "Before image";
-    splitImageB.alt = altB || "After image";
+  function openSplitLightbox(srcs, captions, caption) {
+    for (var k = 0; k < splitImages.length; k++) {
+      splitImages[k].src = srcs[k] || "";
+      splitImages[k].alt = captions[k] || "Menu redesign image " + (k + 1);
+      splitImages[k].style.display = srcs[k] ? "block" : "none";
+    }
     largeImage.src = "";
     largeImage.style.display = "none";
     largeVideo.style.display = "none";
     largeVideo.pause();
-    splitContainer.style.display = "flex";
+    splitContainer.style.display = "grid";
+    splitContainer.style.gridTemplateColumns = "repeat(2, minmax(0, 1fr))";
+    splitContainer.style.gap = "0.75rem";
     captionElem.textContent = caption || "";
     overlay.classList.add("is-open");
     document.body.style.overflow = "hidden";
@@ -359,8 +364,10 @@ if (galleryImages.length > 0) {
     // starts the video with sound
     largeVideo.muted = true;
     largeVideo.src = "";
-    splitImageA.src = "";
-    splitImageB.src = "";
+    for (var l = 0; l < splitImages.length; l++) {
+      splitImages[l].src = "";
+      splitImages[l].style.display = "none";
+    }
   }
 
   // add click events to each gallery image
@@ -368,11 +375,6 @@ if (galleryImages.length > 0) {
     var el = galleryImages[i];
     var splitImageParent = el.closest(".split-image");
     var figure = el.closest("figure");
-    var caption = "";
-
-    if (figure && figure.querySelector("figcaption")) {
-      caption = figure.querySelector("figcaption").textContent;
-    }
 
     el.setAttribute("tabindex", "0");
     el.style.cursor = "pointer";
@@ -383,9 +385,65 @@ if (galleryImages.length > 0) {
         e.preventDefault();
         e.stopPropagation();
         var parentFigure = this.closest("figure");
-        var imgs = parentFigure.querySelectorAll(".split-image__item img");
-        if (imgs.length >= 2) {
-          openSplitLightbox(imgs[0].src, imgs[1].src, caption);
+        var srcs = [];
+        var imgCaptions = [];
+        var captionText = "";
+
+        if (parentFigure && parentFigure.querySelector("figcaption")) {
+          captionText = parentFigure.querySelector("figcaption").textContent;
+        }
+
+        if (
+          parentFigure &&
+          (parentFigure.classList.contains("menu-redesign-preview") ||
+            parentFigure.getAttribute("data-lightbox-set") === "menu-redesign")
+        ) {
+          srcs = [
+            parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+              ? "media/graphicWork/menuRedesign1.png"
+              : "media/menuRedesign1.png",
+            parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+              ? "media/graphicWork/menuRedesign2.png"
+              : "media/menuRedesign2.png",
+            parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+              ? "media/graphicWork/menuRedesign3.png"
+              : "media/menuRedesign3.png",
+            parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+              ? "media/graphicWork/menuRedesign4.png"
+              : "media/menuRedesign4.png",
+          ];
+          imgCaptions = [
+            "Menu redesign concept one",
+            "Menu redesign concept two",
+            "Menu redesign concept three",
+            "Menu redesign concept four",
+          ];
+        } else if (
+          parentFigure &&
+          parentFigure.getAttribute("data-lightbox-set") === "health-newsletter"
+        ) {
+          srcs = [
+            "media/graphicWork/healthNewsletter1.png",
+            "media/graphicWork/healthNewsletter2.png",
+            "media/graphicWork/healthNewsletter3.png",
+            "media/graphicWork/healthNewsletter4.png",
+          ];
+          imgCaptions = [
+            "Health newsletter concept one",
+            "Health newsletter concept two",
+            "Health newsletter concept three",
+            "Health newsletter concept four",
+          ];
+        } else {
+          var imgs = parentFigure.querySelectorAll(".split-image__item img");
+          for (var m = 0; m < imgs.length; m++) {
+            srcs.push(imgs[m].src);
+            imgCaptions.push(imgs[m].alt || "");
+          }
+        }
+
+        if (srcs.length >= 2) {
+          openSplitLightbox(srcs, imgCaptions, captionText);
         }
       });
 
@@ -394,9 +452,67 @@ if (galleryImages.length > 0) {
           e.preventDefault();
           e.stopPropagation();
           var parentFigure = this.closest("figure");
-          var imgs = parentFigure.querySelectorAll(".split-image__item img");
-          if (imgs.length >= 2) {
-            openSplitLightbox(imgs[0].src, imgs[1].src, caption);
+          var srcs = [];
+          var imgCaptions = [];
+          var captionText = "";
+
+          if (parentFigure && parentFigure.querySelector("figcaption")) {
+            captionText = parentFigure.querySelector("figcaption").textContent;
+          }
+
+          if (
+            parentFigure &&
+            (parentFigure.classList.contains("menu-redesign-preview") ||
+              parentFigure.getAttribute("data-lightbox-set") ===
+                "menu-redesign")
+          ) {
+            srcs = [
+              parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+                ? "media/graphicWork/menuRedesign1.png"
+                : "media/menuRedesign1.png",
+              parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+                ? "media/graphicWork/menuRedesign2.png"
+                : "media/menuRedesign2.png",
+              parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+                ? "media/graphicWork/menuRedesign3.png"
+                : "media/menuRedesign3.png",
+              parentFigure.getAttribute("data-lightbox-set") === "menu-redesign"
+                ? "media/graphicWork/menuRedesign4.png"
+                : "media/menuRedesign4.png",
+            ];
+            imgCaptions = [
+              "Menu redesign concept one",
+              "Menu redesign concept two",
+              "Menu redesign concept three",
+              "Menu redesign concept four",
+            ];
+          } else if (
+            parentFigure &&
+            parentFigure.getAttribute("data-lightbox-set") ===
+              "health-newsletter"
+          ) {
+            srcs = [
+              "media/graphicWork/healthNewsletter1.png",
+              "media/graphicWork/healthNewsletter2.png",
+              "media/graphicWork/healthNewsletter3.png",
+              "media/graphicWork/healthNewsletter4.png",
+            ];
+            imgCaptions = [
+              "Health newsletter concept one",
+              "Health newsletter concept two",
+              "Health newsletter concept three",
+              "Health newsletter concept four",
+            ];
+          } else {
+            var imgs = parentFigure.querySelectorAll(".split-image__item img");
+            for (var n = 0; n < imgs.length; n++) {
+              srcs.push(imgs[n].src);
+              imgCaptions.push(imgs[n].alt || "");
+            }
+          }
+
+          if (srcs.length >= 2) {
+            openSplitLightbox(srcs, imgCaptions, captionText);
           }
         }
       });
