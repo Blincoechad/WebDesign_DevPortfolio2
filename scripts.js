@@ -36,6 +36,66 @@ if (hamburgerBtn && navMenu) {
   });
 }
 
+// featured bike clip: muted preview on load, then play from start with sound
+var bikeClipVideo = document.getElementById("bikeClipVideo");
+var bikeClipPlayBtn = document.getElementById("bikeClipPlayBtn");
+
+if (bikeClipVideo) {
+  function startPreviewMode(videoEl) {
+    videoEl.muted = true;
+    videoEl.defaultMuted = true;
+    videoEl.loop = true;
+    videoEl.controls = false;
+    videoEl.currentTime = 0;
+
+    var previewPromise = videoEl.play();
+    if (previewPromise && typeof previewPromise.catch === "function") {
+      previewPromise.catch(function () {});
+    }
+
+    if (bikeClipPlayBtn) {
+      bikeClipPlayBtn.textContent = "Play With Sound";
+      bikeClipPlayBtn.setAttribute("data-state", "preview");
+    }
+  }
+
+  function playWithSound(videoEl) {
+    videoEl.muted = false;
+    videoEl.defaultMuted = false;
+    videoEl.loop = false;
+    videoEl.controls = true;
+    videoEl.currentTime = 0;
+    videoEl.volume = 1;
+
+    var playPromise = videoEl.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(function () {});
+    }
+
+    if (bikeClipPlayBtn) {
+      bikeClipPlayBtn.textContent = "Stop Video";
+      bikeClipPlayBtn.setAttribute("data-state", "playing");
+    }
+  }
+
+  startPreviewMode(bikeClipVideo);
+
+  if (bikeClipPlayBtn) {
+    bikeClipPlayBtn.addEventListener("click", function () {
+      var isPlayingWithSound =
+        bikeClipPlayBtn.getAttribute("data-state") === "playing";
+
+      if (isPlayingWithSound) {
+        bikeClipVideo.pause();
+        startPreviewMode(bikeClipVideo);
+        return;
+      }
+
+      playWithSound(bikeClipVideo);
+    });
+  }
+}
+
 // contact form - formspree is whats handling the submissions
 
 var contactForm = document.getElementById("contactForm");
