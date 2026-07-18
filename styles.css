@@ -699,6 +699,41 @@ li + li {
 .preview-label {
   color: var(--muted);
 }
+
+.portfolio-placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: 1rem;
+  text-align: center;
+  border-radius: calc(var(--radius-md) - 8px);
+  border: 1px dashed rgba(16, 32, 51, 0.24);
+  background:
+    linear-gradient(rgba(16, 32, 51, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 32, 51, 0.06) 1px, transparent 1px),
+    rgba(255, 255, 255, 0.64);
+  background-size: 22px 22px;
+}
+
+.portfolio-placeholder p {
+  margin: 0;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.portfolio-placeholder-sm {
+  min-height: 160px;
+}
+
+.marketing-feature-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--ink);
+}
+
+.marketing-feature-list li {
+  margin-top: 0.5rem;
+}
 .clickToView {
   color: black;
   text-decoration: underline;
