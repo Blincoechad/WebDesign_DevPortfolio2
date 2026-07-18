@@ -668,6 +668,7 @@ li + li {
 }
 
 .card img,
+.card video,
 .gallery-grid img,
 .gallery-grid video,
 .redesign-preview img,
@@ -677,6 +678,7 @@ li + li {
 }
 
 .card img,
+.card video,
 .redesign-preview img {
   aspect-ratio: 16 / 10;
   object-fit: cover;
@@ -699,11 +701,107 @@ li + li {
 .preview-label {
   color: var(--muted);
 }
+
+.portfolio-placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: 1rem;
+  text-align: center;
+  border-radius: calc(var(--radius-md) - 8px);
+  border: 1px dashed rgba(16, 32, 51, 0.24);
+  background:
+    linear-gradient(rgba(16, 32, 51, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 32, 51, 0.06) 1px, transparent 1px),
+    rgba(255, 255, 255, 0.64);
+  background-size: 22px 22px;
+}
+
+.portfolio-placeholder p {
+  margin: 0;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.portfolio-placeholder-sm {
+  min-height: 160px;
+}
+
+.marketing-feature-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--ink);
+}
+
+.marketing-feature-list li {
+  margin-top: 0.5rem;
+}
+
+.strategy-flow-bubbles {
+  margin: 0.6rem 0 0.45rem;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.1rem;
+}
+
+.strategy-flow-bubbles li {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  min-width: 0;
+  text-align: center;
+  padding: 0.78rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid rgba(16, 32, 51, 0.16);
+  background: linear-gradient(
+    135deg,
+    rgba(47, 116, 255, 0.12),
+    rgba(95, 184, 255, 0.1)
+  );
+  color: var(--ink-strong);
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+.strategy-flow-bubbles li:not(:last-child)::after {
+  content: "↓";
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 0.42rem);
+  transform: translateX(-50%);
+  color: rgba(16, 32, 51, 0.6);
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.strategy-framework-card {
+  min-height: 100%;
+}
+
+.strategy-framework-card .strategy-flow-bubbles {
+  flex: 1;
+  margin: 0.5rem 0 0;
+  justify-content: space-between;
+}
+
+.strategy-framework-card .strategy-flow-bubbles li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.strategy-framework-card .strategy-flow-bubbles li:not(:last-child)::after {
+  top: calc(100% + 0.55rem);
+}
 .clickToView {
   color: black;
   text-decoration: underline;
   line-height: 4rem;
-  text-underline-offset: .4rem;
+  text-underline-offset: 0.4rem;
 }
 
 .split-image {
