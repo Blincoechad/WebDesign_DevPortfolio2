@@ -6,13 +6,40 @@ injectSpeedInsights();
 
 var hamburgerBtn = document.getElementById("hamburger");
 var navMenu = document.getElementById("navLinks");
+var workDropdown = document.querySelector(".nav-dropdown");
+var workDropdownToggle = document.querySelector(".nav-dropdown-toggle");
 
 if (hamburgerBtn && navMenu) {
+  function setWorkDropdownOpen(isOpen) {
+    if (!workDropdown || !workDropdownToggle) return;
+    workDropdown.classList.toggle("is-open", isOpen);
+    workDropdownToggle.setAttribute("aria-expanded", String(isOpen));
+  }
+
   hamburgerBtn.addEventListener("click", function () {
     var isOpen = navMenu.classList.toggle("is-open");
     hamburgerBtn.classList.toggle("is-open", isOpen);
     hamburgerBtn.setAttribute("aria-expanded", String(isOpen));
+    if (!isOpen) {
+      setWorkDropdownOpen(false);
+    }
   });
+
+  if (workDropdownToggle) {
+    workDropdownToggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var isOpen = workDropdown && workDropdown.classList.contains("is-open");
+      setWorkDropdownOpen(!isOpen);
+    });
+  }
+
+  if (workDropdown) {
+    workDropdown.addEventListener("mouseleave", function () {
+      if (window.matchMedia("(hover: hover)").matches) {
+        setWorkDropdownOpen(false);
+      }
+    });
+  }
 
   // close menu when a nav link is clicked
   var navLinks = navMenu.querySelectorAll(".nav-link");
@@ -21,6 +48,7 @@ if (hamburgerBtn && navMenu) {
       navMenu.classList.remove("is-open");
       hamburgerBtn.classList.remove("is-open");
       hamburgerBtn.setAttribute("aria-expanded", "false");
+      setWorkDropdownOpen(false);
     });
   }
 
@@ -28,10 +56,26 @@ if (hamburgerBtn && navMenu) {
   document.addEventListener("click", function (e) {
     var clickedInsideMenu = navMenu.contains(e.target);
     var clickedBtn = hamburgerBtn.contains(e.target);
+    var clickedWorkToggle =
+      workDropdownToggle && workDropdownToggle.contains(e.target);
     if (!clickedInsideMenu && !clickedBtn) {
       navMenu.classList.remove("is-open");
       hamburgerBtn.classList.remove("is-open");
       hamburgerBtn.setAttribute("aria-expanded", "false");
+    }
+
+    if (
+      workDropdown &&
+      !workDropdown.contains(e.target) &&
+      !clickedWorkToggle
+    ) {
+      setWorkDropdownOpen(false);
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      setWorkDropdownOpen(false);
     }
   });
 }

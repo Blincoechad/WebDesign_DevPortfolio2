@@ -1366,18 +1366,77 @@ td {
 
 .nav-link {
   padding: 0.7rem 1rem;
-  border-radius: 999px;
+  border-radius: 10px;
   color: rgba(231, 240, 255, 0.88);
   text-decoration: none;
   font-weight: 700;
 }
 
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.7rem 1rem;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(231, 240, 255, 0.88);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.nav-dropdown-toggle::after {
+  content: "▾";
+  font-size: 0.8rem;
+  line-height: 1;
+  transform: translateY(1px);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  min-width: 218px;
+  display: none;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.45rem;
+  border-radius: 16px;
+  background: rgba(9, 18, 33, 0.97);
+  border: 1px solid rgba(105, 182, 255, 0.22);
+  box-shadow: 0 16px 28px rgba(6, 11, 20, 0.42);
+}
+
+.nav-dropdown-menu .nav-link {
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.nav-dropdown.is-open .nav-dropdown-menu {
+  display: flex;
+}
+
+@media (min-width: 721px) {
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown:focus-within .nav-dropdown-menu {
+    display: flex;
+  }
+}
+
 .nav-link:hover,
 .nav-link:focus-visible,
-.nav-link.active {
+.nav-link.active,
+.nav-dropdown-toggle:hover,
+.nav-dropdown-toggle:focus-visible,
+.nav-dropdown-toggle.active {
   color: #ffffff;
-  background: rgba(47, 116, 255, 0.28);
-  box-shadow: 0 8px 20px rgba(6, 11, 20, 0.34);
+  background: rgba(47, 116, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(6, 11, 20, 0.2);
 }
 
 .hamburger {
@@ -1559,8 +1618,26 @@ td {
     display: flex;
   }
 
-  .nav-link {
+  .nav-link,
+  .nav-dropdown-toggle {
     text-align: center;
+  }
+
+  .nav-dropdown-toggle {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav-dropdown {
+    width: 100%;
+  }
+
+  .nav-dropdown-menu {
+    position: static;
+    width: 100%;
+    margin-top: 0.45rem;
+    background: rgba(5, 11, 22, 0.94);
   }
 
   .two-col,

@@ -71,12 +71,26 @@
         <nav id="navLinks" class="nav-links" aria-label="Main navigation">
           <a href="index.html" class="nav-link active">Home</a>
           <a href="about.html" class="nav-link">About</a>
-          <a href="logic-programs.html" class="nav-link">JavaScript Builds</a>
-          <a href="web-projects.html" class="nav-link">Web Projects</a>
-          <a href="graphic-work.html" class="nav-link">Graphic Work</a>
-          <a href="digital-marketing.html" class="nav-link">
-            Digital Marketing
-          </a>
+          <div class="nav-dropdown">
+            <button
+              class="nav-dropdown-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="myWorkMenu"
+            >
+              My Work
+            </button>
+            <div id="myWorkMenu" class="nav-dropdown-menu">
+              <a href="logic-programs.html" class="nav-link">
+                JavaScript Builds
+              </a>
+              <a href="web-projects.html" class="nav-link">Web Projects</a>
+              <a href="graphic-work.html" class="nav-link">Graphic Work</a>
+              <a href="digital-marketing.html" class="nav-link">
+                Digital Marketing
+              </a>
+            </div>
+          </div>
           <a href="contact.html" class="nav-link">Contact</a>
         </nav>
       </div>
@@ -432,8 +446,8 @@
               <a href="contact.html" class="btn btn-secondary contact-button">
                 Contact Me
               </a>
-              <a href="graphic-work.html" class="btn btn-primary">
-                See Graphic Work
+              <a href="web-projects.html" class="btn btn-primary">
+                Web Design Work
               </a>
             </div>
           </div>
@@ -447,7 +461,7 @@
           <div class="footer-col footer-col--about">
             <h3>About</h3>
             <p>
-              Built by Chad Blincoe.  Pixel Designs is a creative portfolio
+              Built by Chad Blincoe. Pixel Designs is a creative portfolio
               focused on polished web experiences, front-end development, and
               visual storytelling.
             </p>
